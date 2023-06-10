@@ -1,4 +1,5 @@
-import smbus
+# from smbus import SMBus
+from smbus2 import SMBus, i2c_msg
 import time
 import struct
 
@@ -46,7 +47,7 @@ class BNO055:
 	BNO055_SW_REV_ID_MSB_ADDR 			= 0x05
 	BNO055_BL_REV_ID_ADDR 				= 0X06
 
-	# Accel data register 
+	# Accel data register
 	BNO055_ACCEL_DATA_X_LSB_ADDR 			= 0X08
 	BNO055_ACCEL_DATA_X_MSB_ADDR 			= 0X09
 	BNO055_ACCEL_DATA_Y_LSB_ADDR 			= 0X0A
@@ -54,7 +55,7 @@ class BNO055:
 	BNO055_ACCEL_DATA_Z_LSB_ADDR 			= 0X0C
 	BNO055_ACCEL_DATA_Z_MSB_ADDR 			= 0X0D
 
-	# Mag data register 
+	# Mag data register
 	BNO055_MAG_DATA_X_LSB_ADDR 			= 0X0E
 	BNO055_MAG_DATA_X_MSB_ADDR 			= 0X0F
 	BNO055_MAG_DATA_Y_LSB_ADDR 			= 0X10
@@ -62,15 +63,15 @@ class BNO055:
 	BNO055_MAG_DATA_Z_LSB_ADDR 			= 0X12
 	BNO055_MAG_DATA_Z_MSB_ADDR			= 0X13
 
-	# Gyro data registers 
+	# Gyro data registers
 	BNO055_GYRO_DATA_X_LSB_ADDR 			= 0X14
 	BNO055_GYRO_DATA_X_MSB_ADDR 			= 0X15
 	BNO055_GYRO_DATA_Y_LSB_ADDR 			= 0X16
 	BNO055_GYRO_DATA_Y_MSB_ADDR 			= 0X17
 	BNO055_GYRO_DATA_Z_LSB_ADDR 			= 0X18
 	BNO055_GYRO_DATA_Z_MSB_ADDR 			= 0X19
-	
-	# Euler data registers 
+
+	# Euler data registers
 	BNO055_EULER_H_LSB_ADDR 			= 0X1A
 	BNO055_EULER_H_MSB_ADDR 			= 0X1B
 	BNO055_EULER_R_LSB_ADDR 			= 0X1C
@@ -78,7 +79,7 @@ class BNO055:
 	BNO055_EULER_P_LSB_ADDR 			= 0X1E
 	BNO055_EULER_P_MSB_ADDR 			= 0X1F
 
-	# Quaternion data registers 
+	# Quaternion data registers
 	BNO055_QUATERNION_DATA_W_LSB_ADDR 		= 0X20
 	BNO055_QUATERNION_DATA_W_MSB_ADDR 		= 0X21
 	BNO055_QUATERNION_DATA_X_LSB_ADDR 		= 0X22
@@ -88,7 +89,7 @@ class BNO055:
 	BNO055_QUATERNION_DATA_Z_LSB_ADDR 		= 0X26
 	BNO055_QUATERNION_DATA_Z_MSB_ADDR 		= 0X27
 
-	# Linear acceleration data registers 
+	# Linear acceleration data registers
 	BNO055_LINEAR_ACCEL_DATA_X_LSB_ADDR 		= 0X28
 	BNO055_LINEAR_ACCEL_DATA_X_MSB_ADDR 		= 0X29
 	BNO055_LINEAR_ACCEL_DATA_Y_LSB_ADDR	 	= 0X2A
@@ -96,7 +97,7 @@ class BNO055:
 	BNO055_LINEAR_ACCEL_DATA_Z_LSB_ADDR		= 0X2C
 	BNO055_LINEAR_ACCEL_DATA_Z_MSB_ADDR		= 0X2D
 
-	# Gravity data registers 
+	# Gravity data registers
 	BNO055_GRAVITY_DATA_X_LSB_ADDR 			= 0X2E
 	BNO055_GRAVITY_DATA_X_MSB_ADDR	 		= 0X2F
 	BNO055_GRAVITY_DATA_Y_LSB_ADDR 			= 0X30
@@ -104,10 +105,10 @@ class BNO055:
 	BNO055_GRAVITY_DATA_Z_LSB_ADDR 			= 0X32
 	BNO055_GRAVITY_DATA_Z_MSB_ADDR 			= 0X33
 
-	# Temperature data register 
+	# Temperature data register
 	BNO055_TEMP_ADDR 				= 0X34
 
-	# Status registers 
+	# Status registers
 	BNO055_CALIB_STAT_ADDR 				= 0X35
 	BNO055_SELFTEST_RESULT_ADDR	 		= 0X36
 	BNO055_INTR_STAT_ADDR 				= 0X37
@@ -116,22 +117,22 @@ class BNO055:
 	BNO055_SYS_STAT_ADDR 				= 0X39
 	BNO055_SYS_ERR_ADDR 				= 0X3A
 
-	# Unit selection register 
+	# Unit selection register
 	BNO055_UNIT_SEL_ADDR 				= 0X3B
 	BNO055_DATA_SELECT_ADDR 			= 0X3C
 
-	# Mode registers 
+	# Mode registers
 	BNO055_OPR_MODE_ADDR 				= 0X3D
 	BNO055_PWR_MODE_ADDR 				= 0X3E
 
 	BNO055_SYS_TRIGGER_ADDR 			= 0X3F
 	BNO055_TEMP_SOURCE_ADDR 			= 0X40
 
-	# Axis remap registers 
+	# Axis remap registers
 	BNO055_AXIS_MAP_CONFIG_ADDR 			= 0X41
 	BNO055_AXIS_MAP_SIGN_ADDR 			= 0X42
 
-	# SIC registers 
+	# SIC registers
 	BNO055_SIC_MATRIX_0_LSB_ADDR 			= 0X43
 	BNO055_SIC_MATRIX_0_MSB_ADDR 			= 0X44
 	BNO055_SIC_MATRIX_1_LSB_ADDR 			= 0X45
@@ -150,8 +151,8 @@ class BNO055:
 	BNO055_SIC_MATRIX_7_MSB_ADDR 			= 0X52
 	BNO055_SIC_MATRIX_8_LSB_ADDR 			= 0X53
 	BNO055_SIC_MATRIX_8_MSB_ADDR 			= 0X54
-	
-	# Accelerometer Offset registers	 
+
+	# Accelerometer Offset registers
 	ACCEL_OFFSET_X_LSB_ADDR 			= 0X55
 	ACCEL_OFFSET_X_MSB_ADDR 			= 0X56
 	ACCEL_OFFSET_Y_LSB_ADDR 			= 0X57
@@ -159,7 +160,7 @@ class BNO055:
 	ACCEL_OFFSET_Z_LSB_ADDR 			= 0X59
 	ACCEL_OFFSET_Z_MSB_ADDR 			= 0X5A
 
-	# Magnetometer Offset registers 
+	# Magnetometer Offset registers
 	MAG_OFFSET_X_LSB_ADDR 				= 0X5B
 	MAG_OFFSET_X_MSB_ADDR 				= 0X5C
 	MAG_OFFSET_Y_LSB_ADDR 				= 0X5D
@@ -175,7 +176,7 @@ class BNO055:
 	GYRO_OFFSET_Z_LSB_ADDR 				= 0X65
 	GYRO_OFFSET_Z_MSB_ADDR 				= 0X66
 
-	# Radius registers 
+	# Radius registers
 	ACCEL_RADIUS_LSB_ADDR 				= 0X67
 	ACCEL_RADIUS_MSB_ADDR 				= 0X68
 	MAG_RADIUS_LSB_ADDR 				= 0X69
@@ -184,16 +185,36 @@ class BNO055:
 	# REGISTER DEFINITION END
 
 
+
+	# division factor (Data sheet Sec3.6.4)
+	BNO055_ACCEL_DIV_MSQ                = 100.0  # 1 [m/s^2] = 100 LSB
+	BNO055_ACCEL_DIV_MG                 = 1.0    # 1 [mg] = 1 LSB
+	BNO055_MAG_DIV_UT                   = 16.0   # 1 [micro Tesla] = 16 LSB
+	BNO055_GYRO_DIV_DPS                 = 16.0   # 1 [degree per sec] = 16 LSB
+	BNO055_GYRO_DIV_RPS                 = 900.0  # 1 [rotation per sec] = 900 LSB
+	BNO055_EULER_DIV_DEG                = 16.0   # 1 [degree] = 16 LSB
+	BNO055_EULER_DIV_RAD                = 900.0  # 1 [radian] = 900 LSB
+	BNO055_QUATERNION_DIV               = 2**14  # 1 [Auaternion] = 1^14 LSB
+	BNO055_LINEAR_ACCEL_DIV_MSQ         = 100.0  # 1 [m/s^2] = 100 LSB
+	BNO055_LINEAR_ACCEL_DIV_MG          = 1.0    # 1 [mg] = 1 LSB
+	BNO055_GRAVITY_DIV_MSQ              = 100.0  # 1 [m/s^2] = 100 LSB
+	BNO055_GRAVITY_DIV_MG               = 1.0    # 1 [mg] = 1 LSB
+	BNO055_TEMP_DIV_FAHRENHEIT          = 0.5    # 2 [Fahrenheit] = 1 LSB
+	BNO055_TEMP_DIV_CELSIUS             = 1.0    # 1 [celsius] = 1 LSB
+
+
 	def __init__(self, sensorId=-1, address=0x28):
 		self._sensorId = sensorId
 		self._address = address
 		self._mode = BNO055.OPERATION_MODE_NDOF
 
+	def __del__(self):
+		self._bus.close()
 
 	def begin(self, mode=None):
 		if mode is None: mode = BNO055.OPERATION_MODE_NDOF
 		# Open I2C bus
-		self._bus = smbus.SMBus(1)
+		self._bus = SMBus(1)
 
 		# Make sure we have the right device
 		if self.readBytes(BNO055.BNO055_CHIP_ID_ADDR)[0] != BNO055.BNO055_ID:
@@ -218,6 +239,10 @@ class BNO055:
 		self.writeBytes(BNO055.BNO055_PAGE_ID_ADDR, [0])
 		self.writeBytes(BNO055.BNO055_SYS_TRIGGER_ADDR, [0])
 		time.sleep(0.01)
+
+		# 何故か結果に反映されない
+		# data = 0b10000001
+		# self.writeBytes(BNO055.BNO055_UNIT_SEL_ADDR, [data])
 
 		# Set the requested mode
 		self.setMode(mode)
@@ -244,6 +269,10 @@ class BNO055:
 		self.writeBytes(BNO055.BNO055_PAGE_ID_ADDR, [0])
 		(sys_stat, sys_err) = self.readBytes(BNO055.BNO055_SYS_STAT_ADDR, 2)
 		self_test = self.readBytes(BNO055.BNO055_SELFTEST_RESULT_ADDR)[0]
+		if True:
+			print("self test: xxxx mcu gyr mag acc = ", bin(self_test))
+			print("system status: ", hex(sys_stat))
+			print("system error:", hex(sys_err))
 		return (sys_stat, self_test, sys_err)
 
 	def getRevInfo(self):
@@ -258,16 +287,27 @@ class BNO055:
 		return (calData >> 6 & 0x03, calData >> 4 & 0x03, calData >> 2 & 0x03, calData & 0x03)
 
 	def getTemp(self):
-		return self.readBytes(BNO055.BNO055_TEMP_ADDR)[0]
+		temp = self.readBytes(BNO055.BNO055_TEMP_ADDR)[0]
+		# temp = temp / BNO055.BNO055_TEMP_DIV_CELSIUS
+		return temp
 
 	def getVector(self, vectorType):
 		buf = self.readBytes(vectorType, 6)
 		xyz = struct.unpack('hhh', struct.pack('BBBBBB', buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]))
-		if vectorType == BNO055.VECTOR_MAGNETOMETER:	scalingFactor = 16.0
-		elif vectorType == BNO055.VECTOR_GYROSCOPE:	scalingFactor = 900.0
-		elif vectorType == BNO055.VECTOR_EULER: 		scalingFactor = 16.0
-		elif vectorType == BNO055.VECTOR_GRAVITY:	scalingFactor = 100.0
-		else:											scalingFactor = 1.0
+		if vectorType == BNO055.VECTOR_ACCELEROMETER:
+			scalingFactor = BNO055.BNO055_ACCEL_DIV_MSQ
+		elif vectorType == BNO055.VECTOR_MAGNETOMETER:
+			scalingFactor = BNO055.BNO055_MAG_DIV_UT
+		elif vectorType == BNO055.VECTOR_GYROSCOPE:
+			scalingFactor = 900.0 # BNO055.BNO055_GYRO_DIV_RPS
+		elif vectorType == BNO055.VECTOR_EULER:
+			scalingFactor = BNO055.BNO055_EULER_DIV_DEG
+		elif vectorType == BNO055.VECTOR_LINEARACCEL:
+			scalingFactor = BNO055.BNO055_LINEAR_ACCEL_DIV_MSQ
+		elif vectorType == BNO055.VECTOR_GRAVITY:
+			scalingFactor = BNO055.BNO055_GRAVITY_DIV_MSQ
+		else:
+			scalingFactor = 1.0
 		return tuple([i/scalingFactor for i in xyz])
 
 	def getQuat(self):
@@ -281,15 +321,42 @@ class BNO055:
 	def writeBytes(self, register, byteVals):
 		return self._bus.write_i2c_block_data(self._address, register, byteVals)
 
+	def restartedBytes_withRepeatedStart(self, register, numBytes=1):
+		write = i2c_msg.write(self._address, [register])
+		read = i2c_msg.read(self._address, numBytes)
+		self._bus.i2c_rdwr(write, read)
+		data = list(read)
+		return data
+
 
 if __name__ == '__main__':
+	import numpy as np
+
 	bno = BNO055()
 	if bno.begin() is not True:
 		print("Error initializing device")
 		exit()
 	time.sleep(1)
 	bno.setExternalCrystalUse(True)
-	while True:
-		print(bno.getVector(BNO055.VECTOR_EULER))
-		time.sleep(0.01)
 
+	while True:
+		acc = bno.getVector(BNO055.VECTOR_ACCELEROMETER)
+		mag = bno.getVector(BNO055.VECTOR_MAGNETOMETER)
+		gyro = bno.getVector(BNO055.VECTOR_GYROSCOPE)
+		euler_angle = bno.getVector(BNO055.VECTOR_EULER)
+		linear_acc = bno.getVector(BNO055.VECTOR_LINEARACCEL)
+		gravity_acc = bno.getVector(BNO055.VECTOR_GRAVITY)
+		temperature = bno.getTemp()
+
+		print(f"acc = {acc} [m/s^2]")
+		# print(f"mag = {mag} [ut],   norm = {np.linalg.norm(mag)}")
+		# print(f"gyro = {np.round(gyro, 2)} [dps]")
+		# print(f"Euler angle = {np.round(euler_angle, 1)} [deg]")
+		# print(f"linear acc = {linear_acc} [m/s^2]")
+		# print(f"gravity = {gravity_acc} [m/s^2]")
+		# print(f"temperature = {temperature} [C]")
+
+		# calibration_status = bno.getCalibration()
+		# print("calibration:", calibration_status)
+
+		time.sleep(1.0)
