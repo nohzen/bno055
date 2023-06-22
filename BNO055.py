@@ -299,7 +299,7 @@ class BNO055:
 		elif vectorType == BNO055.VECTOR_MAGNETOMETER:
 			scalingFactor = BNO055.BNO055_MAG_DIV_UT
 		elif vectorType == BNO055.VECTOR_GYROSCOPE:
-			scalingFactor = 900.0 # BNO055.BNO055_GYRO_DIV_RPS
+			scalingFactor = BNO055.BNO055_GYRO_DIV_DPS
 		elif vectorType == BNO055.VECTOR_EULER:
 			scalingFactor = BNO055.BNO055_EULER_DIV_DEG
 		elif vectorType == BNO055.VECTOR_LINEARACCEL:
